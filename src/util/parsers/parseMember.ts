@@ -9,7 +9,7 @@ export default function parseMember(guild: Guild, mention: string) {
 		if (mention.startsWith('!')) {
 			mention = mention.slice(1);
 		}
-
-		return guild.members.cache.get(mention);
 	}
+
+	return guild.members.cache.get(mention);
 }
