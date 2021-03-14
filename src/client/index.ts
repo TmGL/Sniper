@@ -21,6 +21,9 @@ class Bot extends Client {
             const commands = fs.readdirSync(`${commandPath}/${dir}`).filter(file => file.endsWith('.ts'));
             for (const file of commands) {
                 const { command } = require(`${commandPath}/${dir}/${file}`);
+                if (!command.name) {
+                    throw new Error('Command name doesn\'t exist');
+                }
                 this.commands.set(command.name, command);
                 if (command.aliases && command.aliases.length !== 0) {
                     command.aliases.forEach(aliase => {

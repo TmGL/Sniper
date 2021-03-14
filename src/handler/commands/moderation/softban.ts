@@ -3,10 +3,10 @@ import { parseMember } from '../../../util';
 import { memberHistorySchema as Schema } from '../../../schemas/memberHistorySchema';
 
 export const command: Command = {
-    name: 'ban',
-    description: 'Bans a member in the server.',
-    aliases: ['b'],
-    usage: 'ban <user> [reason]',
+    name: 'softban',
+    description: 'Softbans a member in the server.',
+    aliases: ['sb'],
+    usage: 'softban <user> [reason]',
     run: async (client, message, args) => {
         if (!message.member.permissions.has('BAN_MEMBERS')) return;
 
@@ -34,8 +34,9 @@ export const command: Command = {
         }
 
         try {
-            await member.ban({ reason: reason, days: 0 });
-            await message.channel.send(member.user.tag + ' was banned successfully!');
+            await member.ban({ reason: reason, days: 7 });
+            await message.channel.send(member.user.tag + ' was softbanned successfully!');
+            await message.guild.members.unban(member.user.id, `Softbanned by ${message.author.tag}`);
             await Schema.findOne({
                 Guild: message.guild.id,
                 Member: member.user.id
@@ -45,14 +46,14 @@ export const command: Command = {
                 }
 
                 if (data) {
-                    if (data.Bans) {
-                        (data.Bans as number)++;
+                    if (data.Softbans) {
+                        (data.Softbans as number)++;
                     } else {
-                        data.Bans = 1;
+                        data.Softbans = 1;
                     }
                     (data.LastAction as object) = {
                         author: message.author.id,
-                        action: 'Banned',
+                        action: 'Softbanned',
                         date: new Date().getTime(),
                         reason: reason
                     }
@@ -61,10 +62,10 @@ export const command: Command = {
                     new Schema({
                         Guild: message.guild.id,
                         Member: member.user.id,
-                        Bans: 1,
+                        Softbans: 1,
                         LastAction: {
                             author: message.author.id,
-                            action: 'Banned',
+                            action: 'Softbanned',
                             date: new Date().getTime(),
                             reason: reason
                         }
