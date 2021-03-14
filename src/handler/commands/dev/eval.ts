@@ -11,9 +11,7 @@ export const command: Command = {
 
         const code = args.join(' ');
         if (!code) {
-            return message.channel.send(
-                'Please provide some code to eval!'
-            );
+            return message.channel.send('Please provide some code to eval!');
         }
 
         try {
@@ -23,30 +21,18 @@ export const command: Command = {
             }
 
             if (JSON.stringify(result).length > 2000) {
-                message.channel.send(
-                    'Content was too long, logged instead.'
-                );
+                message.channel.send('Content was too long, logged instead.');
                 return console.log(result);
             }
 
-            return message.channel.send(
-                result, {
-                    code: 'js'
-                }
-            );
+            return message.channel.send(result, { code: 'js' });
         } catch (err) {
             if (JSON.stringify(err.message).length > 2000) {
-                message.channel.send(
-                    'Error too long, logged instead.'
-                );
+                message.channel.send('Error too long, logged instead.');
                 return console.log(err);
             }
 
-            return message.channel.send(
-                err, {
-                    code: 'js'
-                }
-            );
+            return message.channel.send(err, { code: 'js' });
         }
     }
 }
