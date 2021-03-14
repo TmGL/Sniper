@@ -1,6 +1,7 @@
 import { Command } from '../../../interfaces';
 import { parseMember } from '../../../util';
 import { memberHistorySchema as Schema } from '../../../schemas/memberHistorySchema';
+import { MemberHistory } from '../../../interfaces';
 
 export const command: Command = {
     name: 'softban',
@@ -40,7 +41,7 @@ export const command: Command = {
             await Schema.findOne({
                 Guild: message.guild.id,
                 Member: member.user.id
-            }, async (err: Error, data: any) => {
+            }, async (err: Error, data: MemberHistory) => {
                 if (err) {
                     throw err;
                 }
@@ -51,7 +52,7 @@ export const command: Command = {
                     } else {
                         data.Softbans = 1;
                     }
-                    (data.LastAction as object) = {
+                    data.LastAction = {
                         author: message.author.id,
                         action: 'Softbanned',
                         date: new Date().getTime(),

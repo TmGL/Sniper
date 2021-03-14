@@ -17,7 +17,7 @@ export const command: Command = {
             return message.reply('Please provide a valid member!');
         }
 
-        let role = message.guild.roles.cache.find(r => r.name === 'Muted');
+        const role = message.guild.roles.cache.find(r => r.name === 'Muted');
         const member = parseMember(message.guild, args[0]);
 
         if (!member) {

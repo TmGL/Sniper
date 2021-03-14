@@ -12,7 +12,8 @@ export const event: Event = {
 
         mongoose.connect(uri, {
             useNewUrlParser: true,
-            useFindAndModify: false
+            useFindAndModify: false,
+            useUnifiedTopology: true
         }).then(() => {
             console.log('Connected to mongo!');
         });

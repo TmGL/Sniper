@@ -1,6 +1,7 @@
 import { Command } from '../../../interfaces';
 import { parseMember } from '../../../util';
 import { memberHistorySchema as Schema } from '../../../schemas/memberHistorySchema';
+import { MemberHistory } from '../../../interfaces';
 
 export const command: Command = {
     name: 'kick',
@@ -39,7 +40,7 @@ export const command: Command = {
             await Schema.findOne({
                 Guild: message.guild.id,
                 Member: member.user.id
-            }, async (err: Error, data: any) => {
+            }, async (err: Error, data: MemberHistory) => {
                 if (err) {
                     throw err;
                 }
@@ -50,7 +51,7 @@ export const command: Command = {
                     } else {
                         data.Kicks = 1;
                     }
-                    (data.LastAction as object) = {
+                    data.LastAction = {
                         author: message.author.id,
                         action: 'Kicked',
                         date: new Date().getTime(),

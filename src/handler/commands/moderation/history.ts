@@ -1,7 +1,8 @@
 import { Command } from "../../../interfaces";
 import { memberHistorySchema as Schema } from '../../../schemas/memberHistorySchema';
 import { parseMember } from '../../../util';
-import { Message, MessageEmbed } from 'discord.js';
+import { MessageEmbed } from 'discord.js';
+import { MemberHistory } from '../../../interfaces';
 
 export const command: Command = {
     name: 'history',
@@ -25,7 +26,7 @@ export const command: Command = {
             await Schema.findOne({
                 Guild: message.guild.id,
                 Member: member.user.id
-            }, async (err: Error, data: any) => {
+            }, async (err: Error, data: MemberHistory) => {
                 if (err) {
                     throw err;
                 }
