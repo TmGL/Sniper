@@ -4,7 +4,7 @@ import {
     Config
 } from '../interfaces';
 import { Client, Collection } from 'discord.js';
-import JsonConfig from '../config.json';
+import JsonConfig from '../config/bot.json';
 import path from 'path';
 import fs from 'fs';
 

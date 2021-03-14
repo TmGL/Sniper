@@ -1,6 +1,6 @@
-import { Guild } from 'discord.js';
+import { Guild, GuildMember } from 'discord.js';
 
-export default function parseMember(guild: Guild, mention: string) {
+export default function parseMember(guild: Guild, mention: string) : GuildMember | undefined {
 	if (!mention) return undefined;
 
 	if (mention.startsWith('<@') && mention.endsWith('>')) {
