@@ -29,6 +29,10 @@ export const command: Command = {
             return message.reply('I cannot ban that member!');
         }
 
+        if (member.roles.highest.comparePositionTo(message.member.roles.highest) >= 0 && message.member.id !== message.guild.ownerID) {
+            return message.reply('That member has a higher role than you!');
+        }
+        
         try {
             await member.kick(args.slice(1).join(' '));
             await message.channel.send(member.user.tag + ' was kicked successfully!');

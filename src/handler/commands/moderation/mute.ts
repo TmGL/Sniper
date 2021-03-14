@@ -27,6 +27,10 @@ export const command: Command = {
             return message.reply('I could not find the member specified!');
         }
 
+        if (member.roles.highest.comparePositionTo(message.member.roles.highest) >= 0 && message.member.id !== message.guild.ownerID) {
+            return message.reply('That member has a higher role than you!');
+        }
+        
         if (!role) {
             role = await message.guild.roles.create({
                 data: {

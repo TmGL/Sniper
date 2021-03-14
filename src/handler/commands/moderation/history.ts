@@ -12,7 +12,7 @@ export const command: Command = {
         if (!message.member.permissions.has('MANAGE_MESSAGES')) return;
 
         if (!args.length) {
-            return message.reply('I could not find the member specified!');
+            return message.reply('Please provide a valid member!');
         }
 
         const member = parseMember(message.guild, args[0]);

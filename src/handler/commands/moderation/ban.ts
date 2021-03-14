@@ -29,8 +29,12 @@ export const command: Command = {
             return message.reply('I cannot ban that member!');
         }
 
+        if (member.roles.highest.comparePositionTo(message.member.roles.highest) >= 0 && message.member.id !== message.guild.ownerID) {
+            return message.reply('That member has a higher role than you!');
+        }
+
         try {
-            await member.ban({ reason: reason, days: 1 });
+            await member.ban({ reason: reason, days: 0 });
             await message.channel.send(member.user.tag + ' was banned successfully!');
             await Schema.findOne({
                 Guild: message.guild.id,
