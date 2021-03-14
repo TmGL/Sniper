@@ -11,7 +11,7 @@ export const command: Command = {
             .setColor('RANDOM')
             .setFooter(`Type ${client.config.prefix}help <command name> for info on that command!`)
             .addField('Moderation', '`ban`, `kick`, `mute`, `unmute`')
-            .addField('Misc', '`help`, `ping`')
+            .addField('Misc', '`help`, `ping`, `invite`')
             .addField('Dev', '`eval`');
 
         if (args.length) {
@@ -21,7 +21,7 @@ export const command: Command = {
             if (command) {
                 const description = command.description || 'No description';
                 const aliases = command.aliases ? command.aliases.join(', ') : 'No aliases';
-                const usage = command.usage;
+                const usage = client.config.prefix + command.usage;
 
                 return message.channel.send(
                     new MessageEmbed()
