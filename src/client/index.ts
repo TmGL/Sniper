@@ -1,14 +1,10 @@
-import { 
-    Command,
-    Event,
-    Config
-} from '../interfaces';
+import { Command, Event, Config } from '../interfaces';
 import { Client, Collection } from 'discord.js';
 import JsonConfig from '../config/bot.json';
 import path from 'path';
 import fs from 'fs';
 
-class Bot extends Client {
+class Sniper extends Client {
     public commands: Collection<string, Command> = new Collection();
     public events: Collection<string, Event> = new Collection();
     public aliases: Collection<string, Command> = new Collection();
@@ -42,4 +38,4 @@ class Bot extends Client {
     }
 }
 
-export default Bot;
+export default Sniper;

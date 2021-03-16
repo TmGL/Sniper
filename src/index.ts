@@ -1,3 +1,3 @@
-import Client from './client';
+import Sniper from './client';
 
-new Client().init();
+new Sniper().init();
