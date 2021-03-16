@@ -9,6 +9,7 @@ export interface Command {
     name: string;
     description?: string;
     usage: string;
+    devOnly?: boolean;
     aliases?: string[];
     run: Run;
 }

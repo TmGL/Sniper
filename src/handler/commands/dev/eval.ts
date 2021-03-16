@@ -6,12 +6,11 @@ export const command: Command = {
     description: 'Evaluates code.',
     aliases: ['ev'],
     usage: 'eval <code>',
+    devOnly: true,
     run: async (client, message, args) => {
-        if (message.author.id !== '378912969670787073') return;
-
         const code = args.join(' ');
         if (!code) {
-            return message.channel.send('Please provide some code to eval!');
+            return message.reply('Please provide some code to eval!');
         }
 
         try {
