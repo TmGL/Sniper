@@ -3,6 +3,7 @@ import { memberHistorySchema as Schema } from '../../../schemas/memberHistorySch
 import { parseMember } from '../../../util';
 import { MessageEmbed } from 'discord.js';
 import { MemberHistory } from '../../../interfaces';
+import { getLast } from '../../../util';
 
 export const command: Command = {
     name: 'history',
@@ -35,13 +36,11 @@ export const command: Command = {
                     return message.reply('That member has no moderation history!');
                 }
 
-                const { Bans, Kicks, Mutes, Warns, Softbans } = data;
-                const { author, action, date, reason  } = data.LastAction;
-                const user = await client.users.fetch(author);
-
+                const { Bans, Kicks, Mutes, Warns, Softbans, RecentActions } = data;
+                
                 const history = new MessageEmbed()
                     .setTitle('History for ' + member.user.tag)
-                    .addField('Last Mod Action', `\`${action}\` by \`${user.tag}\` on \`${new Date(date).toLocaleDateString()}\` for \`${reason}\``)
+                    .addField('Recent Mod Actions', getLast(RecentActions, 3).join('\n') || 'None')
                     .setThumbnail(member.user.displayAvatarURL({ dynamic: true }))
                     .setColor('RANDOM')
                     .setDescription(`Bans: \`${Bans || 0}\` \nKicks: \`${Kicks || 0}\` \nMutes: \`${Mutes || 0}\` \nWarns: \`${Warns || 0}\` \nSoftbans: \`${Softbans || 0}\``);

@@ -1,5 +1,7 @@
 import { Command } from '../../../interfaces';
 import { parseMember } from '../../../util';
+import { configSchema as Config } from '../../../schemas/configSchema';
+import { ServerConfig } from '../../../interfaces';
 
 export const command: Command = {
     name: 'unmute',
@@ -7,7 +9,20 @@ export const command: Command = {
     aliases: ['um'],
     usage: 'umute <user> [reason]',
     run: async (client, message, args) => {
-        if (!message.member.permissions.has('MANAGE_ROLES')) return;
+        let modRoleId: string;
+        await Config.findOne({
+            Guild: message.guild.id
+        }, async (err: Error, data: ServerConfig) => {
+            if (err) {
+                throw err;
+            }
+
+            if (data) {
+                modRoleId = data.ModRoleId;
+            }
+        });
+
+        if (!message.member.permissions.has('BAN_MEMBERS') && !message.member.roles.cache.has(modRoleId)) return;
 
         if (!message.guild.me.permissions.has('MANAGE_ROLES')) {
             return message.reply('I do not have permission to unmute members!');
@@ -38,7 +53,7 @@ export const command: Command = {
 
         try {
             await member.roles.remove(role);
-            await message.channel.send(member.user.tag + ' was umuted successfully!');
+            await message.channel.send(`**${member.user.tag}** was unmuted successfully!`);
         } catch (err) {
             console.error(err);
         }

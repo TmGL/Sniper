@@ -1,6 +1,6 @@
 {
-  "name": "TypeScriptDiscordBot",
-  "version": "1.0.0",
+  "name": "Sniper-DiscordBot",
+  "version": "1.0.2",
   "description": "A moderation bot made with TypeScript",
   "main": "src/index.ts",
   "scripts": {
@@ -13,9 +13,10 @@
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.17.0",
     "@typescript-eslint/parser": "^4.17.0",
+    "eslint": "^7.22.0",
     "ts-node": "^9.1.1",
     "ts-node-dev": "^1.1.6",
-    "typescript": "^4.2.2"
+    "typescript": "^4.2.3"
   },
   "dependencies": {
     "discord.js": "^12.5.1",

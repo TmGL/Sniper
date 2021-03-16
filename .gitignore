@@ -17,7 +17,9 @@ pids
 *.pid
 *.seed
 
-# Config
-config 
+# Config files
 bot.json
 dbconfig.json
+
+# Tests
+test.ts

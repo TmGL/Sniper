@@ -8,7 +8,7 @@ const schema = new mongoose.Schema({
     Mutes: Number,
     Warns: Number,
     Softbans: Number,
-    LastAction: Object
+    RecentActions: [String]
 });
 
 export const memberHistorySchema = mongoose.model('member-history', schema);
