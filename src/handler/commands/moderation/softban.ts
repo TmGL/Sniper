@@ -1,9 +1,7 @@
-import { Command } from '../../../interfaces';
+import { Command, ServerConfig, MemberHistory } from '../../../interfaces';
 import { parseMember } from '../../../util';
 import { memberHistorySchema as Schema } from '../../../schemas/memberHistorySchema';
-import { MemberHistory } from '../../../interfaces';
 import { configSchema as Config } from '../../../schemas/configSchema';
-import { ServerConfig } from '../../../interfaces';
 
 export const command: Command = {
     name: 'softban',

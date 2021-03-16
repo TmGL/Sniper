@@ -1,9 +1,8 @@
 import { Command } from "../../../interfaces";
 import { memberHistorySchema as Schema } from '../../../schemas/memberHistorySchema';
-import { parseMember } from '../../../util';
+import { parseMember, getLast } from '../../../util';
 import { MessageEmbed } from 'discord.js';
 import { MemberHistory } from '../../../interfaces';
-import { getLast } from '../../../util';
 
 export const command: Command = {
     name: 'history',
