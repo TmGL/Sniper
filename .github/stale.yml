@@ -1,0 +1,28 @@
+daysUntilStale: 90
+daysUntilClose: false
+
+exemptLabels:
+  - pinned
+  - security
+  - With reproduction steps
+  - attached PR
+  - regression
+  - release blocker
+
+exemptMilestones: true
+
+staleLabel: stale
+
+markComment: >
+  This issue has been automatically marked as stale because it has not been commented on for at least three months.
+  If you can still reproduce this error on the `next` branch,
+  please reply with all of the information you have about it in order to keep the issue open.
+  Thank you for all your contributions.
+
+closeComment: false
+
+pulls:
+  markComment: >
+    This pull request has been automatically marked as stale because it has not had
+    recent activity. 
+    Thank you for your contributions.
