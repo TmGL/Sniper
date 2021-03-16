@@ -10,9 +10,9 @@ export const command: Command = {
             .setTitle('All Commands')
             .setColor('RANDOM')
             .setFooter(`Type ${client.config.prefix}help <command name> for info on that command!`)
-            .addField('Moderation', '`ban`, `kick`, `mute`, `unmute`')
+            .addField('Moderation', '`ban`, `history`, `kick`, `mute`, `softban`, `unmute`')
             .addField('Misc', '`help`, `ping`, `invite`')
-            .addField('Dev', '`eval`');
+            .addField('Dev', '`eval`, `docs`');
 
         if (args.length) {
             const commandName = args[0]?.toLowerCase();
