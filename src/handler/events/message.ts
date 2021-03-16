@@ -1,5 +1,6 @@
 import { Event, Command } from '../../interfaces';
 import { Message } from 'discord.js';
+import { ownerId } from '../../config/bot.json';
 
 export const event: Event = {
     name: 'message',
@@ -15,6 +16,10 @@ export const event: Event = {
             .toLowerCase();
 
         const command = client.commands.get(commandName) || client.aliases.get(commandName);
-        if (command) (command as Command).run(client, message, args);
+        if (command) {
+            if (command.devOnly && message.author.id !== ownerId) return;
+
+            (command as Command).run(client, message, args);
+        }
     }
 }
