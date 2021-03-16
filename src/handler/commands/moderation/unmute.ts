@@ -1,7 +1,6 @@
-import { Command } from '../../../interfaces';
+import { Command, ServerConfig } from '../../../interfaces';
 import { parseMember } from '../../../util';
 import { configSchema as Config } from '../../../schemas/configSchema';
-import { ServerConfig } from '../../../interfaces';
 
 export const command: Command = {
     name: 'unmute',
@@ -10,6 +9,7 @@ export const command: Command = {
     usage: 'umute <user> [reason]',
     run: async (client, message, args) => {
         let modRoleId: string;
+        let mutedRoleId: string;
         await Config.findOne({
             Guild: message.guild.id
         }, async (err: Error, data: ServerConfig) => {
@@ -19,6 +19,7 @@ export const command: Command = {
 
             if (data) {
                 modRoleId = data.ModRoleId;
+                mutedRoleId = data.MutedRoleId;
             }
         });
 
@@ -32,7 +33,7 @@ export const command: Command = {
             return message.reply('Please provide a valid member!');
         }
 
-        const role = message.guild.roles.cache.find(r => r.name === 'Muted');
+        const role = message.guild.roles.cache.get(mutedRoleId) || message.guild.roles.cache.find(r => r.name === 'Muted');
         const member = parseMember(message.guild, args[0]);
 
         if (!member) {

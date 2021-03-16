@@ -1,10 +1,8 @@
 import ms from 'ms';
-import { Command } from '../../../interfaces';
+import { Command, ServerConfig, MemberHistory } from '../../../interfaces';
 import { parseMember } from '../../../util';
 import { memberHistorySchema as Schema } from '../../../schemas/memberHistorySchema';
-import { MemberHistory } from '../../../interfaces';
 import { configSchema as Config } from '../../../schemas/configSchema';
-import { ServerConfig } from '../../../interfaces';
 
 export const command: Command = {
     name: 'mute',
@@ -37,7 +35,7 @@ export const command: Command = {
             return message.reply('Please provide a valid member!');
         }
 
-        let role = message.guild.roles.cache.get(mutedRoleId) || message.guild.roles.cache.find(r => r.name === 'Muted');
+        const role = message.guild.roles.cache.get(mutedRoleId) || message.guild.roles.cache.find(r => r.name === 'Muted');
         let reason = args.slice(1).join(' ') || 'No reason provided';
         const member = parseMember(message.guild, args[0]);
 
