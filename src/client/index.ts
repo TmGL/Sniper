@@ -9,7 +9,7 @@ class Sniper extends Client {
     public events: Collection<string, Event> = new Collection();
     public aliases: Collection<string, Command> = new Collection();
     public config: Config = JsonConfig;
-    public async init() {
+    public async init() : Promise<any> {
         this.login(this.config.token);
 
         const commandPath = path.join(__dirname, "..", "handler", "commands");
