@@ -9,7 +9,7 @@ class Sniper extends Client {
     public events: Collection<string, Event> = new Collection();
     public aliases: Collection<string, Command> = new Collection();
     public config: Config = JsonConfig;
-    public async init() : Promise<any> {
+    public async init() : Promise<void> {
         this.login(this.config.token);
 
         const commandPath = path.join(__dirname, "..", "handler", "commands");
@@ -22,7 +22,7 @@ class Sniper extends Client {
                 }
                 this.commands.set(command.name, command);
                 if (command.aliases && command.aliases.length !== 0) {
-                    command.aliases.forEach(aliase => {
+                    command.aliases.forEach((aliase: string) => {
                         this.aliases.set(aliase, command);
                     });
                 }
