@@ -16,6 +16,10 @@ export const command: Command = {
         const src = split[1]?.trim() || 'stable';
         const url = `https://djsdocs.sorta.moe/v2/embed?src=${src}&q=${encodeURIComponent(query)}`;
 
+        if (!query) {
+            return message.reply('Please provide a query!');
+        }
+
         return axios.get(url).then(res => {
             return message.channel.send('', { embed: res.data });
         }).catch(() => {
