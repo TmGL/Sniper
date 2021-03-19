@@ -22,4 +22,8 @@ bot.json
 dbconfig.json
 
 # Tests
+test
 test.ts
+
+# IDE
+out
