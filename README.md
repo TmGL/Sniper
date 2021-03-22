@@ -1,6 +1,6 @@
 # Sniper 
  
-My first Discord bo that I made in Typescript. And no, this bot doesn't have a snipe command. 
+My first Discord bot that I made in Typescript. And no, this bot doesn't have a snipe command. 
 
 
 This is unfinished.
