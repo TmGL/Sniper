@@ -3,6 +3,7 @@
   "version": "1.0.2",
   "description": "A moderation bot made with TypeScript",
   "main": "src/index.ts",
+  "type": "module",
   "scripts": {
     "start": "ts-node-dev --respawn --transpile-only --poll ./src/index.ts",
     "lint": "eslint . --ext .ts"
