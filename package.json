@@ -1,5 +1,5 @@
 {
-  "name": "Sniper-DiscordBot",
+  "name": "Sniper",
   "version": "1.0.2",
   "description": "A moderation bot made with TypeScript",
   "main": "src/index.ts",
@@ -22,7 +22,6 @@
   "dependencies": {
     "axios": "^0.21.1",
     "discord.js": "^12.5.1",
-    "mongoose": "^5.11.15",
-    "ms": "^2.1.3"
+    "mongoose": "^5.11.15"
   }
 }
