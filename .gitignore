@@ -19,7 +19,7 @@ pids
 
 # Config files
 bot.json
-dbconfig.json
+db.json
 
 # Tests
 test
