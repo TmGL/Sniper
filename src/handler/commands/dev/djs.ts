@@ -20,10 +20,22 @@ export const command: Command = {
             return message.reply('Please provide a query!');
         }
 
-        return axios.get(url).then(res => {
-            return message.channel.send('', { embed: res.data });
-        }).catch(() => {
-            return message.reply(`There are no results for \`${query}\` in the \`${src}\` branch.`);
-        });
+        switch (src.toLowerCase()) {
+            case 'stable':
+            case 'master':
+            case 'rpc':
+            case 'commando':
+            case 'collection':
+            case 'akairo':
+            case 'akairo-master':
+                return axios.get(url).then(res => {
+                    return message.channel.send('', { embed: res.data });
+                }).catch(() => {
+                    return message.reply(`There are no results for \`${query}\` in the \`${src}\` branch.`);
+                });
+
+            default: 
+                return message.channel.send('That is not a valid project!');
+        }
     }
 }
