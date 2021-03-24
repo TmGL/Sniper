@@ -81,6 +81,7 @@ function parse(str: string): number | undefined {
 
 function fmtShort(ms: number): string {
     const msAbs = Math.abs(ms);
+    
     if (msAbs >= d) {
         return Math.round(ms / d) + 'd';
     }
