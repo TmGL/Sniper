@@ -1,5 +1,5 @@
 import { Event } from '../../interfaces';
-import { uri } from '../../config/dbconfig.json';
+import { uri } from '../../config/db.json';
 import { activity } from '../../config/bot.json';
 import mongoose from 'mongoose';
 
