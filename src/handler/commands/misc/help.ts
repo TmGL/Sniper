@@ -11,6 +11,7 @@ export const command: Command = {
             .setColor('RANDOM')
             .setFooter(`Type ${client.config.prefix}help <command name> for info on that command!`)
             .addField('Moderation', '`ban`, `history`, `kick`, `mute`, `softban`, `unmute`, `unban`')
+            .addField('Config', '`modrole`, `muterole`')
             .addField('Misc', '`help`, `ping`, `invite`')
             .addField('Dev', '`eval`, `docs`');
 
