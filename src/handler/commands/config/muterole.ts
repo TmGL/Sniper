@@ -4,16 +4,16 @@ import { parseRole } from '../../../util';
 
 export const command: Command = {
     name: 'muterole',
-    description: 'Set\'s the muted role for the server. These people can\'t talk when the mute command is run on them. Make sure the role has no perms to speak in all channels.',
-    usage: 'modrole <set/remove> <role>',
+    description: 'Set\'s the muted role for the server. These people can\'t talk when the mute command is run on them. Make sure the role has no perms to speak in all channels. Alternatively, the bot can make one.',
+    usage: 'modrole <set/remove/make> [role]',
     run: async (client, message, args) => {
         if (!message.member.permissions.has(['MANAGE_GUILD', 'MANAGE_ROLES'])) return;
 
         if (!args.length) {
-            return message.reply('Please provide a valid option! \n\nValid options: `set`, `remove`');
+            return message.reply('Please provide a valid option! \n\nValid options: `set`, `remove`, `make`');
         }
 
-        await Schema.findOne({
+        return await Schema.findOne({
             Guild: message.guild.id
         }, async (err: Error, data: ServerConfig) => {
             if (err) {
@@ -38,7 +38,7 @@ export const command: Command = {
                 } else {
                     new Schema({
                         Guild: message.guild.id,
-                        ModRoleId: role.id
+                        MutedRoleId: role.id
                     }).save();
                     return message.channel.send(`The muted role has been set to **${role.name}**`);
                 }
@@ -49,6 +49,28 @@ export const command: Command = {
                 } else {
                     return message.channel.send('The muted role is not setup for this server!');
                 }
+            } else if (args[0]?.toLowerCase() === "make") {
+                const role = await message.guild.roles.create({
+                    data: {
+                        name: 'Muted',
+                        color: 'BLACK',
+                    },
+                    reason: `Muted role setup by ${message.author.tag}`
+                });
+
+                message.guild.channels.cache.forEach((channel) => {
+                    channel.updateOverwrite(role, {
+                        SEND_MESSAGES: false,
+                        SPEAK: false
+                    });
+                });
+
+                new Schema({
+                    Guild: message.guild.id,
+                    MutedRoleId: role.id
+                }).save();
+
+                return message.channel.send('The muted role has been created successfully!');
             }
         });
     }
