@@ -1,6 +1,6 @@
 import { Command, ServerConfig } from '../../../interfaces';
 import { configSchema as Schema } from '../../../schemas/configSchema';
-import { parseRole } from '../../../util';
+import { parseRole, messages } from '../../../util';
 
 export const command: Command = {
     name: 'modrole',
@@ -10,7 +10,7 @@ export const command: Command = {
         if (!message.member.permissions.has(['MANAGE_GUILD', 'MANAGE_ROLES'])) return;
 
         if (!args.length) {
-            return message.reply('Please provide a valid option! \n\nValid options: `set`, `remove`, `create`');
+            return message.reply(messages.commands.config.errors.args.general(['set', 'remove']));
         }
 
         await Schema.findOne({
@@ -22,7 +22,7 @@ export const command: Command = {
 
             if (args[0]?.toLowerCase() === "set") {
                 if (!args[1]) {
-                    return message.reply('Please mention a role or role id!');
+                    return message.reply(messages.commands.config.errors.args.set);
                 }
 
                 const role = parseRole(message.guild, args[1]);

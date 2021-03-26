@@ -1,7 +1,7 @@
-import { Command } from "../../../interfaces";
+import { Command } from '../../../interfaces';
 import { memberHistorySchema as Schema } from '../../../schemas/memberHistorySchema';
-import { parseMember, getLast } from '../../../util';
-import { MessageEmbed } from 'discord.js';
+import { parseMember, getLast, messages } from '../../../util';
+import { MessageEmbed, GuildMember } from 'discord.js';
 import { MemberHistory } from '../../../interfaces';
 
 export const command: Command = {
@@ -13,13 +13,13 @@ export const command: Command = {
         if (!message.member.permissions.has('MANAGE_MESSAGES')) return;
 
         if (!args.length) {
-            return message.reply('Please provide a valid member!');
+            return message.reply(messages.commands.mod.errors.args.general());
         }
 
-        const member = parseMember(message.guild, args[0]);
+        const member: GuildMember = parseMember(message.guild, args[0]);
 
         if (!member) {
-            return message.reply('I couldn\'t find the member specified!');
+            return message.reply(messages.commands.mod.errors.invalid_member);
         }
 
         try {
@@ -32,7 +32,7 @@ export const command: Command = {
                 }
 
                 if (!data) {
-                    return message.reply('That member has no moderation history!');
+                    return message.reply(messages.commands.mod.errors.no_history);
                 }
 
                 const { Bans, Kicks, Mutes, Warns, Softbans, RecentActions } = data;

@@ -1,8 +1,8 @@
-import ms from 'ms';
 import { Command, ServerConfig, MemberHistory } from '../../../interfaces';
-import { parseMember } from '../../../util';
+import { parseMember, ms, messages } from '../../../util';
 import { memberHistorySchema as Schema } from '../../../schemas/memberHistorySchema';
 import { configSchema as Config } from '../../../schemas/configSchema';
+import { Role, GuildMember } from 'discord.js';
 
 export const command: Command = {
     name: 'mute',
@@ -25,30 +25,30 @@ export const command: Command = {
             }
         });
 
-        if (!message.member.permissions.has('BAN_MEMBERS') && !message.member.roles.cache.has(modRoleId)) return;
+        if (!message.member.permissions.has('MANAGE_ROLES') && !message.member.roles.cache.has(modRoleId)) return;
 
         if (!message.guild.me.permissions.has('MANAGE_ROLES')) {
-            return message.reply('I do not have permission to mute members!');
+            return message.reply(messages.commands.mod.errors.no_perms('manage roles'));
         }
 
         if (!args.length) {
-            return message.reply('Please provide a valid member!');
+            return message.reply(messages.commands.mod.errors.args.general('to mute'));
         }
 
-        const role = message.guild.roles.cache.get(mutedRoleId) || message.guild.roles.cache.find(r => r.name === 'Muted');
-        let reason = args.slice(1).join(' ') || 'No reason provided';
-        const member = parseMember(message.guild, args[0]);
+        const role: Role = message.guild.roles.cache.get(mutedRoleId) || message.guild.roles.cache.find(r => r.name === 'Muted');
+        let reason: string = args.slice(1).join(' ') || 'No reason provided';
+        const member: GuildMember = parseMember(message.guild, args[0]);
 
         if (!member) {
-            return message.reply('I could not find the member specified!');
+            return message.reply(messages.commands.mod.errors.invalid_member);
         }
 
         if (member.roles.highest.comparePositionTo(message.member.roles.highest) >= 0 && message.member.id !== message.guild.ownerID) {
-            return message.reply('That member has a higher role than you!');
+            return message.reply(messages.commands.mod.errors.role_hierarchy);
         }
         
         if (!role) {
-            return message.reply('The muted role has not been setup for this server or a role called Muted, use the muterole command to set it up!');
+            return message.reply(messages.commands.mod.errors.no_muted_role);
         }
 
         if (!role.editable) {
@@ -56,7 +56,7 @@ export const command: Command = {
         }
 
         if (member.roles.cache.has(role.id)) {
-            return message.reply('That member is already muted!');
+            return message.reply(messages.commands.mod.errors.already.muted);
         }
 
         let parsedDuration: number;
@@ -72,7 +72,7 @@ export const command: Command = {
 
         try {
             await member.roles.add(role, parsedDuration ? args.slice(2).join(' ') : args.slice(1).join(' '));
-            await message.channel.send(`**${member.user.tag}** was muted successfully!`);
+            await message.channel.send(messages.commands.mod.success.send(member, 'muted'));
             await Schema.findOne({
                 Guild: message.guild.id,
                 Member: member.user.id
@@ -81,24 +81,18 @@ export const command: Command = {
                     throw err;
                 }
 
+                const recent = messages.commands.mod.success.db.recent('Muted', message.author.tag, new Date().getTime(), reason);
+
                 if (data) {
-                    if (data.Mutes) {
-                        (data.Mutes as number)++;
-                    } else {
-                        data.Mutes = 1;
-                    }
-                    if (data.RecentActions) {
-                        data.RecentActions.push(`\`Muted\` by \`${message.author.tag}\` on \`${new Date(new Date().getTime()).toLocaleDateString()}\` for \`${reason}\``);
-                    } else {
-                        data.RecentActions = [`\`Muted\` by \`${message.author.tag}\` on \`${new Date(new Date().getTime()).toLocaleDateString()}\` for \`${reason}\``];
-                    }
+                    data.Mutes ? (data.Mutes as number)++ : data.Mutes = 1;
+                    data.RecentActions ? data.RecentActions.push(recent) : data.RecentActions = [recent];
                     data.save();
                 } else {
                     new Schema({
                         Guild: message.guild.id,
                         Member: member.user.id,
                         Mutes: 1,
-                        RecentActions: [`\`Muted\` by \`${message.author.tag}\` on \`${new Date(new Date().getTime()).toLocaleDateString()}\` for \`${reason}\``]
+                        RecentActions: [recent]
                     }).save();
                 }
             });
