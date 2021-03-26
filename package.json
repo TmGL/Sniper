@@ -1,5 +1,5 @@
 {
-  "name": "Sniper",
+  "name": "sniper",
   "version": "1.0.2",
   "description": "A moderation bot made with TypeScript",
   "main": "src/index.ts",
