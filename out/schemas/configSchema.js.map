@@ -1,0 +1,1 @@
+{"version":3,"file":"configSchema.js","sourceRoot":"","sources":["../../src/schemas/configSchema.ts"],"names":[],"mappings":";;;;;;AAAA,wDAAgC;AAEhC,MAAM,MAAM,GAAG,IAAI,kBAAQ,CAAC,MAAM,CAAC;IAC/B,KAAK,EAAE,MAAM;IACb,SAAS,EAAE,MAAM;IACjB,WAAW,EAAE,MAAM;CACtB,CAAC,CAAC;AAEU,QAAA,YAAY,GAAG,kBAAQ,CAAC,KAAK,CAAC,eAAe,EAAE,MAAM,CAAC,CAAC"}
